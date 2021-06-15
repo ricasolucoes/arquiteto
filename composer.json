@@ -1,0 +1,56 @@
+{
+    "name": "ricasolucoes/arquiteto",
+    "description": "arquiteto",
+    "type": "library",
+    "keywords": [
+        "ricasolucoes",
+        "arquiteto"
+    ],
+    "license": "MIT",
+    "homepage": "https://ricasolucoes.com/packages/arquiteto/",
+    "support": {
+        "email": "help@ricasolucoes.com",
+        "issues": "https://github.com/ricasolucoes/arquiteto/issues",
+        "source": "https://github.com/ricasolucoes/arquiteto",
+        "docs": "https://github.com/ricasolucoes/arquiteto/blob/master/README.md"
+    },
+    "authors": [
+        {
+            "name": "ricasolucoes",
+            "homepage": "https://ricasolucoes.com.br",
+            "email": "help@ricasolucoes.com.br"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0",
+        "doctrine/orm": ">=2.5",
+        "doctrine/dbal": ">=2.5",
+        "larapack/doctrine-support": ">=0.1",
+        "league/flysystem": ">=1.0.41",
+        "sierratecnologia/muleta": "*",
+        "symfony/inflector": ">=5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arquiteto\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [],
+        "post-update-cmd": [],
+        "post-create-project-cmd": []
+    },
+    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Arquiteto\\ArquitetoProvider"
+            ],
+            "dont-discover": [
+                "laravel/cashier"
+            ]
+        }
+    }
+}
