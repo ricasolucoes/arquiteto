@@ -1,6 +1,6 @@
-# SierraTecnologia Trainner
+# SierraTecnologia Arquiteto
 
-**SierraTecnologia Trainner** Various functionality, and basic controller included out-of-the-box.
+**SierraTecnologia Arquiteto** Various functionality, and basic controller included out-of-the-box.
 
 [![Packagist](https://img.shields.io/packagist/v/sierratecnologia/trainner.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/sierratecnologia/trainner)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/sierratecnologia/trainner.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/sierratecnologia/trainner/)
