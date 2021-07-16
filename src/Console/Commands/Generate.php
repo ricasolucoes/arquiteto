@@ -4,7 +4,7 @@ namespace Arquiteto\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Facilitador\Exceptions\Exception;
+use Exception;
 use Symfony\Component\Console\Input\InputArgument;
 
 class Generate extends Command
