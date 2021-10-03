@@ -27,7 +27,7 @@
         "doctrine/dbal": ">=2.5",
         "larapack/doctrine-support": ">=0.1",
         "league/flysystem": ">=1.0.41",
-        "sierratecnologia/muleta": "*",
+        "sierratecnologia/muleta": "^0.4",
         "symfony/inflector": ">=5.0"
     },
     "autoload": {
@@ -51,5 +51,8 @@
                 "laravel/cashier"
             ]
         }
+    },
+    "require-dev": {
+        "psalm/plugin-laravel": "^1.5"
     }
 }
