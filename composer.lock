@@ -3453,11 +3453,11 @@
         },
         {
             "name": "sierratecnologia/muleta",
-            "version": "dev-dev",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../Muleta",
-                "reference": "8c91cceb0dc09bb4917ce2d6d30ec6494c771964"
+                "reference": "7f45fa28b5e9dc6cc18ae37ceaf41ea580d2ec9e"
             },
             "require": {
                 "laravel/helpers": "^1.1",
