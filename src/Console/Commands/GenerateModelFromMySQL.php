@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateModelFromMySQL extends Command
 {
-
     /**
      * The console command name.
      *
@@ -37,7 +36,7 @@ class GenerateModelFromMySQL extends Command
     {
         $this->dispatch();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -57,7 +56,7 @@ class GenerateModelFromMySQL extends Command
             exit();
         }
         $database_name = $matches[2];
-        $table_name    = $matches[3];
+        $table_name = $matches[3];
 
         //Match the tables
         $tables = $this->getMatchingTables($database_name, $table_name);
@@ -68,8 +67,7 @@ class GenerateModelFromMySQL extends Command
         }
 
         $files_exist = false;
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $files_exist = true;
             if (file_exists('app/Models/' . $this->camelCase1($table->name) . '.php')) {
                 $this->error("Table: {$database_name}.{$table->name}");
@@ -80,17 +78,16 @@ class GenerateModelFromMySQL extends Command
 
         $this->comment($this->rules());
 
-        if (!$this->confirm('Are you happy to proceed? [yes|no]')) {
+        if (! $this->confirm('Are you happy to proceed? [yes|no]')) {
             $this->error('Error: User is a chicken.');
             exit();
         }
 
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $template = $this->template();
 
-            $fields          = $this->getTableFields($database_name, $table->name);
-            $solo_relations  = $this->getTableFieldsSoloRelations($database_name, $table->name);
+            $fields = $this->getTableFields($database_name, $table->name);
+            $solo_relations = $this->getTableFieldsSoloRelations($database_name, $table->name);
             $multi_relations = $this->getTableFieldsMultiRelations($database_name, $table->name);
 
             $template = preg_replace('/#CLASS_NAME#/', $this->camelCase1($table->name), $template);
@@ -103,7 +100,7 @@ class GenerateModelFromMySQL extends Command
 
             if ($table->name == 'user') {
                 $template_user = $this->getUserTable($database_name, $table);
-                $template      = (!$template_user) ? $template : $template_user;
+                $template = (! $template_user) ? $template : $template_user;
             }
             file_put_contents('app/Models/' . $this->camelCase1($table->name) . '.php', $template);
 
@@ -139,13 +136,14 @@ class GenerateModelFromMySQL extends Command
 
     protected function getUserTable($database_name, $table)
     {
-        if (!file_exists('app/Models/User.php')) { return false;
+        if (! file_exists('app/Models/User.php')) {
+            return false;
         }
 
         $original = file_get_contents('app/Models/User.php');
 
-        $fields          = $this->getTableFields($database_name, $table->name);
-        $solo_relations  = $this->getTableFieldsSoloRelations($database_name, $table->name);
+        $fields = $this->getTableFields($database_name, $table->name);
+        $solo_relations = $this->getTableFieldsSoloRelations($database_name, $table->name);
         $multi_relations = $this->getTableFieldsMultiRelations($database_name, $table->name);
 
         $template = rtrim(trim(preg_replace("/public function [a-zA-Z0-9_]{1,}\(\)\n[ \t]{1,}{\n.+\n[ \t]{1,}\}\n\n/", "", $original)), '}')
@@ -169,23 +167,24 @@ class GenerateModelFromMySQL extends Command
     protected function useSofDelete($table_fields, $option)
     {
         $softDelete = false;
-        foreach ($table_fields AS $field)
-        {
+        foreach ($table_fields as $field) {
             if ($field->COLUMN_NAME == 'deleted_at') {
                 $softDelete = true;
             }
         }
 
         $fillable = '';
-        switch ($option)
-        {
-        case 'import':
-            $fillable = 'use Illuminate\Database\Eloquent\SoftDeletes;';
-            break;
-        case 'use':
-            $fillable = 'use SoftDeletes;';
-            break;
+        switch ($option) {
+            case 'import':
+                $fillable = 'use Illuminate\Database\Eloquent\SoftDeletes;';
+
+                break;
+            case 'use':
+                $fillable = 'use SoftDeletes;';
+
+                break;
         }
+
         return ($softDelete) ? $fillable : '';
     }
 
@@ -205,16 +204,15 @@ class GenerateModelFromMySQL extends Command
         $solo_relations = "\n/**  One-to-Many Relations  **/\n\n";
 
         $unique = [];
-        foreach ($fields AS $field)
-        {
-            if(!isset($unique[$field->REFERENCED_TABLE_NAME])) { $unique[$field->REFERENCED_TABLE_NAME] = 0 ;
+        foreach ($fields as $field) {
+            if (! isset($unique[$field->REFERENCED_TABLE_NAME])) {
+                $unique[$field->REFERENCED_TABLE_NAME] = 0 ;
             }
             $unique[$field->REFERENCED_TABLE_NAME]++;
             echo $field->REFERENCED_TABLE_NAME . '=' . $unique[$field->REFERENCED_TABLE_NAME];
         }
 
-        foreach ($fields AS $field)
-        {
+        foreach ($fields as $field) {
             if ($unique[$field->REFERENCED_TABLE_NAME] > 1) {
                 $camel_field = $this->camelCase1($this->stripFkId($field->COLUMN_NAME));
             } else {
@@ -226,6 +224,7 @@ class GenerateModelFromMySQL extends Command
 \t\treturn \$this->hasOne('Arquiteto\\{$camel_field}', '{$field->REFERENCED_COLUMN_NAME}', '{$field->COLUMN_NAME}');
 \t}\n\n";
         }
+
         return $solo_relations;
     }
 
@@ -235,16 +234,15 @@ class GenerateModelFromMySQL extends Command
 
         //Need to apply extra logic for multiple fields mapping to the same tables
         $unique = [] ;
-        foreach($fields AS $field)
-        {
-            if (!isset($unique[$field->TABLE_NAME])) { $unique[$field->TABLE_NAME] = 0;
+        foreach ($fields as $field) {
+            if (! isset($unique[$field->TABLE_NAME])) {
+                $unique[$field->TABLE_NAME] = 0;
             }
             $unique[$field->TABLE_NAME]++ ;
             echo $field->TABLE_NAME . '=' . $unique[$field->TABLE_NAME] ;
         }
 
-        foreach ($fields AS $field)
-        {
+        foreach ($fields as $field) {
             if ($unique[$field->TABLE_NAME] > 1) {
                 $relation_name = $this->camelCase1($this->stripFkId($field->COLUMN_NAME)) . $this->camelCase1($field->TABLE_NAME);
             } else {
@@ -256,6 +254,7 @@ class GenerateModelFromMySQL extends Command
 \t\treturn \$this->hasMany('Arquiteto\\{$this->camelCase1($field->TABLE_NAME)}', '{$field->COLUMN_NAME}', '{$field->REFERENCED_COLUMN_NAME}');
 \t}\n\n";
         }
+
         return $multi_relations;
     }
 
@@ -342,14 +341,13 @@ class GenerateModelFromMySQL extends Command
         $fillable = "[\n";
 
         //Field comments, if available
-        foreach ($table_fields AS $field)
-        {
+        foreach ($table_fields as $field) {
             if ($field->COLUMN_NAME == 'id' || $field->COLUMN_NAME == 'deleted_at') {
                 $fillable .= "\t\t\t\t//'{$field->COLUMN_NAME}', //({$field->COLUMN_TYPE})";
             } else {
                 $fillable .= "\t\t\t\t'{$field->COLUMN_NAME}', //({$field->COLUMN_TYPE})";
             }
-            if (!empty($field->COLUMN_COMMENT)) {
+            if (! empty($field->COLUMN_COMMENT)) {
                 $fillable .= "\t/*{$field->COLUMN_COMMENT}*/";
             }
             $fillable .= "\n";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Serviço referente a linha no banco de dados
  */
@@ -6,11 +7,10 @@
 namespace Arquiteto\Services;
 
 /**
- * 
+ *
  */
 class ArquitetoService
 {
-
     protected $config;
 
     protected $modelServices = false;

@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Arquiteto\Contracts\Traits;
 
-use Support\Patterns\Parser\ClassReader;
-use Pedreiro\Exceptions\SetterGetterException;
 use Support\Patterns\Parser\ComposerParser;
-use Illuminate\Filesystem\Filesystem;
-
-
 use Support\Patterns\Parser\ParseModelClass;
 
 /**
@@ -17,11 +12,10 @@ use Support\Patterns\Parser\ParseModelClass;
  */
 trait ManipuleFile
 {
-    
     protected $composerParser = false;
 
     /**
-     * 
+     *
      * @return void
      */
     protected function commentRules()
@@ -29,16 +23,17 @@ trait ManipuleFile
 
         $this->comment($this->rules());
 
-        if (!$this->confirm('Are you happy to proceed? [yes|no]')) {
+        if (! $this->confirm('Are you happy to proceed? [yes|no]')) {
             $this->error('Error: User is a chicken.');
             exit();
         }
     }
     protected function getComposerParser()
     {
-        if (!$this->composerParser) {
+        if (! $this->composerParser) {
             $this->composerParser = resolve(ComposerParser::class);
         }
+
         return $this->composerParser;
     }
     protected function getNamespaceFromFilePath($filePath)
@@ -53,13 +48,13 @@ trait ManipuleFile
             $className,
             $namespaceClassName
         ] = $this->getClassAndNamespace($name);
-    
+
         $namespacePure = str_replace(
             $this->getComposerParser()->getNamespaceFromClass($name),
             '',
             $namespaceClassName
         );
-    
+
         return explode(
             str_replace(
                 '\\',
@@ -73,10 +68,10 @@ trait ManipuleFile
     protected function getClassAndNamespace($name)
     {
         $parts = array_map('studly_case', explode('\\', $name));
-        
+
         return [
             array_pop($parts),
-            $namespaceClassName = count($parts) > 0 ? implode('\\', $parts).'\\' : ''
+            $namespaceClassName = count($parts) > 0 ? implode('\\', $parts).'\\' : '',
         ];
 
     }
@@ -89,28 +84,29 @@ trait ManipuleFile
         foreach (
             [
                 $namespacePath.'../database',
-                $namespacePath.'Migrations'
+                $namespacePath.'Migrations',
             ] as $path
         ) {
             if ($this->files->exists($path)) {
                 $migrationLocationPath = $path;
             }
         }
-        if (!$migrationLocationPath) {
+        if (! $migrationLocationPath) {
             $this->error("\n\n\tPasta para migration nao localizada!"."\n");
             die;
         }
-    
+
         return $migrationLocationPath;
     }
 
     protected function getParserClass($nameClass): ParseModelClass
     {
         $parserModelClass = new ParseModelClass($nameClass);
-        if (!$parserModelClass->typeIs('model')) {
+        if (! $parserModelClass->typeIs('model')) {
             $this->error("\n\n\tClass nao eh um modelo!"."\n");
             die;
         }
+
         return $parserModelClass;
     }
 

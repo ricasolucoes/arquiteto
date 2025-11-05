@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateRequestFromMySQL extends Command
 {
-
     /**
      * The console command name.
      *
@@ -41,7 +40,7 @@ class GenerateRequestFromMySQL extends Command
     public function dispatch()
     {
         preg_match('/((.+)\.)?(.+)/', $this->argument('database_table'), $matches);
-        if(empty($matches[2])) {
+        if (empty($matches[2])) {
             $matches[2] = env('DB_DATABASE');    //No longer require the database name to be provided
         }
         if (empty($matches[2]) || empty($matches[3])) {
@@ -49,19 +48,18 @@ class GenerateRequestFromMySQL extends Command
             exit();
         }
         $database_name = $matches[2];
-        $table_name    = $matches[3];
+        $table_name = $matches[3];
 
         //Match the tables
         $tables = $this->getMatchingTables($database_name, $table_name);
 
-        if(count($tables) == 0) {
+        if (count($tables) == 0) {
             $this->error('Error: No tables found that match your argument: ' . $table_name);
             exit();
         }
 
         $files_exist = false;
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $files_exist = true;
             if (file_exists('app/Models/' . $this->camelCase1($table->name) . '.php')) {
                 $this->error("Table: {$database_name}.{$table->name}");
@@ -72,23 +70,22 @@ class GenerateRequestFromMySQL extends Command
 
         $this->comment($this->rules());
 
-        if (!$this->confirm('Are you happy to proceed? [yes|no]')) {
+        if (! $this->confirm('Are you happy to proceed? [yes|no]')) {
             $this->error('Error: User is a chicken.');
             exit();
         }
 
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $template = $this->template();
 
-            $fields          = $this->getTableFields($database_name, $table->name);
+            $fields = $this->getTableFields($database_name, $table->name);
 
             $template = preg_replace('/#CLASS_NAME#/', $this->camelCase1($table->name), $template);
             $template = preg_replace('/#REQUEST_FIELDS#/', $this->generateRequestFields($fields), $template);
 
             if ($table->name == 'user') {
-                $template_user= $this->getUserTable($database_name, $table);
-                $template= (!$template_user)? $template : $template_user;
+                $template_user = $this->getUserTable($database_name, $table);
+                $template = (! $template_user) ? $template : $template_user;
             }
             file_put_contents('app/Http/Requests/' . $this->camelCase1($table->name) . 'Request.php', $template);
 
@@ -124,7 +121,8 @@ class GenerateRequestFromMySQL extends Command
 
     protected function getUserTable($database_name, $table)
     {
-        if (!file_exists('app/Models/User.php')) { return false;
+        if (! file_exists('app/Models/User.php')) {
+            return false;
         }
 
         $template = $this->template();
@@ -208,23 +206,22 @@ class GenerateRequestFromMySQL extends Command
         $fields = '' ;
 
         //Field comments, if available
-        foreach ($table_fields AS $field)
-        {//            'name' => 'required|max:128',
-            if($field->COLUMN_NAME == 'id') {
+        foreach ($table_fields as $field) {//            'name' => 'required|max:128',
+            if ($field->COLUMN_NAME == 'id') {
                 continue ;
             }
 
             $fields .= "'{$field->COLUMN_NAME}' => '" ;
-            if($field->IS_NULLABLE != 'YES') {
+            if ($field->IS_NULLABLE != 'YES') {
                 $fields .= "required|" ;
             }
-            if(strtolower($field->COLUMN_NAME) == 'email') {
+            if (strtolower($field->COLUMN_NAME) == 'email') {
                 $fields .= 'email|' ;
             }
-            if($field->CHARACTER_MAXIMUM_LENGTH != null) {
+            if ($field->CHARACTER_MAXIMUM_LENGTH != null) {
                 $fields .= "max:{$field->CHARACTER_MAXIMUM_LENGTH}|" ;
             }
-            if(preg_match('/^fk_.{1,}_id$/', $field->COLUMN_NAME)) {
+            if (preg_match('/^fk_.{1,}_id$/', $field->COLUMN_NAME)) {
                 $fields .= 'exists:TABLE_NAME|' ;
             }
 
