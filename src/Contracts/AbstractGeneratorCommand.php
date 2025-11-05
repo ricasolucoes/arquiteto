@@ -2,9 +2,9 @@
 
 namespace Arquiteto\Contracts;
 
+use Arquiteto\Contracts\Traits\ManipuleFile;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Arquiteto\Contracts\Traits\ManipuleFile;
 
 abstract class AbstractGeneratorCommand extends Command
 {

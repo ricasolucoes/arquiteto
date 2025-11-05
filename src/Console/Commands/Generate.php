@@ -2,10 +2,9 @@
 
 namespace Arquiteto\Console\Commands;
 
-use Illuminate\Support\Str;
-use Illuminate\Console\Command;
 use Exception;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class Generate extends Command
 {
@@ -40,7 +39,7 @@ class Generate extends Command
     {
         // Figure out the stub directory
         $this->stubs = __DIR__.'/../../stubs/generate';
-        if (!is_dir($this->stubs)) {
+        if (! is_dir($this->stubs)) {
             throw new Exception('Could not find stubs dir');
         }
 
@@ -80,7 +79,7 @@ class Generate extends Command
         $file = base_path().'/'.$path;
 
         // Copy the stub over
-        if (!file_exists(dirname($file))) {
+        if (! file_exists(dirname($file))) {
             mkdir(dirname($file), 0744, true);
         }
         if (file_exists($file)) {
@@ -101,7 +100,7 @@ class Generate extends Command
         $file = base_path().'/'.$path;
 
         // Copy the stub over
-        if (!file_exists(dirname($file))) {
+        if (! file_exists(dirname($file))) {
             mkdir(dirname($file), 0744, true);
         }
         if (file_exists($file)) {

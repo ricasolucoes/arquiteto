@@ -3,41 +3,35 @@
 namespace Arquiteto;
 
 use Arquiteto;
+use Arquiteto\Facades\Arquiteto as ArquitetoFacade;
+use Arquiteto\Services\ArquitetoService;
 use Config;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
-use Illuminate\Support\Collection;
-
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Log;
 use Muleta\Traits\Providers\ConsoleTools;
-
-use Route;
-
-use Arquiteto\Facades\Arquiteto as ArquitetoFacade;
-use Arquiteto\Services\ArquitetoService;
 
 class ArquitetoProvider extends ServiceProvider
 {
     use ConsoleTools;
 
     public $packageName = 'arquiteto';
-    const pathVendor = 'ricasolucoes/arquiteto';
+    public const pathVendor = 'ricasolucoes/arquiteto';
 
     public static $aliasProviders = [
         'Arquiteto' => \Arquiteto\Facades\Arquiteto::class,
     ];
 
     public static $providers = [
-        
+
     ];
 
     /**
      * Rotas do Menu
      */
     public static $menuItens = [
-        
+
     ];
 
     /**
@@ -45,7 +39,7 @@ class ArquitetoProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
         // Register configs, migrations, etc
         $this->registerDirectories();
 
@@ -84,7 +78,7 @@ class ArquitetoProvider extends ServiceProvider
             $this->getPublishesPath('config/arquiteto.php'),
             'arquiteto'
         );
-        
+
 
         $this->setProviders();
         // $this->routes();
@@ -103,7 +97,7 @@ class ArquitetoProvider extends ServiceProvider
                 return new Arquiteto();
             }
         );
-        
+
         /*
         |--------------------------------------------------------------------------
         | Register the Utilities
@@ -116,6 +110,7 @@ class ArquitetoProvider extends ServiceProvider
             ArquitetoService::class,
             function ($app) {
                 Log::info('Singleton Arquiteto');
+
                 return new ArquitetoService(\Illuminate\Support\Facades\Config::get('arquiteto'));
             }
         );
@@ -177,13 +172,13 @@ class ArquitetoProvider extends ServiceProvider
             ['views',  'sitec', 'sitec-views']
         );
     }
-    
+
     private function loadTranslations()
     {
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'arquiteto')
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'arquiteto'),
             ],
             ['lang',  'sitec', 'sitec-lang', 'translations']
         );

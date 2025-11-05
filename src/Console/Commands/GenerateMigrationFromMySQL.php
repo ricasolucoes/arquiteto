@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateMigrationFromMySQL extends Command
 {
-
     /**
      * The console command name.
      *
@@ -51,7 +50,7 @@ class GenerateMigrationFromMySQL extends Command
             exit();
         }
         $database_name = $matches[1];
-        $table_name    = $matches[2];
+        $table_name = $matches[2];
 
         //Match the tables
         $tables = $this->getMatchingTables($database_name, $table_name);
@@ -61,20 +60,18 @@ class GenerateMigrationFromMySQL extends Command
             exit();
         }
 
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $this->info('Migration: database/migrations/<date>_create_' . $this->camelCase1($table->name) . '_table.php');
         }
 
         $this->comment($this->rules());
 
-        if (!$this->confirm('Are you happy to proceed? [yes|no]')) {
+        if (! $this->confirm('Are you happy to proceed? [yes|no]')) {
             $this->error('Error: User is a chicken.');
             exit();
         }
 
-        foreach ($tables AS $table)
-        {
+        foreach ($tables as $table) {
             $template = $this->template();
 
             $template = preg_replace('/#CLASS_NAME#/', $this->camelCase1($table->name), $template);
@@ -139,97 +136,120 @@ class GenerateMigrationFromMySQL extends Command
         $descriptors = '' ;
         $mysql_hacks = '' ;
 
-        foreach($fields AS $field)
-        {
+        foreach ($fields as $field) {
             $descriptor = "\t\t\$table->" ;
             $hack = false ;
 
-            switch(strtoupper($field->DATA_TYPE))
-            {
-            case 'BIGINT' :
-                $descriptor .= "bigInteger('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'BLOB' :
-                $descriptor .= "binary('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'LONGBLOB' :
-                   $descriptor = '' ;
-                   $hack = true ;
-                   $mysql_hacks .= "\tDB::statement('ALTER TABLE {$database_name}.{$table_name} ADD {$field->COLUMN_NAME} LONGBLOB') ;" ;
-                break ;
-            case 'MEDIUMBLOB' :
-                $descriptor = '' ;
-                $hack = true ;
-                $mysql_hacks .= "\tDB::statement('ALTER TABLE {$database_name}.{$table_name} ADD {$field->COLUMN_NAME} MEDIUMBLOB') ;" ;
-                break ;
-            case 'BOOLEAN' :
-                $descriptor .= "boolean('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'CHAR' :
-                $descriptor .= "char('{$field->COLUMN_NAME}', {$field->CHARACTER_MAXIMUM_LENGTH})"  ;
-                break ;
-            case 'DATE' :
-                $descriptor .= "date('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'DATETIME' :
-                $descriptor .= "dateTime('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'DECIMAL' :
-                $descriptor .= "decimal('{$field->COLUMN_NAME}', PRECISION, SCALE)" ;
-                break ;
-            case 'DOUBLE' :
-                $descriptor .= "double('{$field->COLUMN_NAME}', {$field->NUMERIC_PRECISION}, {$field->NUMERIC_SCALE})" ;
-                break ;
-            case 'ENUM' :
-                $descriptor .= "enum('{$field->COLUMN_NAME}', [" . preg_replace('/\)$/', '', preg_replace('/enum\(/', '', $field->COLUMN_TYPE)) . "])" ;
-                break ;
-            case 'FLOAT' :
-                $descriptor .= "float('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'INT' : //TODO: If this is a foreign key, make it unsigned to match the AI field
-                $descriptor .= "integer('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'INTEGER' :
-                $descriptor .= "integer('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'JSON' :
-                $descriptor .= "json('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'JSONB' :
-                $descriptor .= "jsonb('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'LONGTEXT' :
-                $descriptor .= "longText('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'MEDIUMINT' :
-                $descriptor .= "mediumInteger('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'MEDIUMTEXT' :
-                $descriptor .= "mediumText('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'SMALLINT' :
-                $descriptor .= "smallInteger('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'VARCHAR' :
-                $descriptor .= "string('{$field->COLUMN_NAME}', {$field->CHARACTER_MAXIMUM_LENGTH})" ;
-                break ;
-            case 'TEXT' :
-                $descriptor .= "text('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'TIME' :
-                $descriptor .= "time('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'TINYINT' :
-                $descriptor .= "tinyInteger('{$field->COLUMN_NAME}')" ;
-                break ;
-            case 'TIMESTAMP' :
-                $descriptor .= "timestamp('{$field->COLUMN_NAME}')" ;
-                break ;
-            default:
-                break ;
+            switch (strtoupper($field->DATA_TYPE)) {
+                case 'BIGINT' :
+                    $descriptor .= "bigInteger('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'BLOB' :
+                    $descriptor .= "binary('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'LONGBLOB' :
+                    $descriptor = '' ;
+                    $hack = true ;
+                    $mysql_hacks .= "\tDB::statement('ALTER TABLE {$database_name}.{$table_name} ADD {$field->COLUMN_NAME} LONGBLOB') ;" ;
+
+                    break ;
+                case 'MEDIUMBLOB' :
+                    $descriptor = '' ;
+                    $hack = true ;
+                    $mysql_hacks .= "\tDB::statement('ALTER TABLE {$database_name}.{$table_name} ADD {$field->COLUMN_NAME} MEDIUMBLOB') ;" ;
+
+                    break ;
+                case 'BOOLEAN' :
+                    $descriptor .= "boolean('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'CHAR' :
+                    $descriptor .= "char('{$field->COLUMN_NAME}', {$field->CHARACTER_MAXIMUM_LENGTH})"  ;
+
+                    break ;
+                case 'DATE' :
+                    $descriptor .= "date('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'DATETIME' :
+                    $descriptor .= "dateTime('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'DECIMAL' :
+                    $descriptor .= "decimal('{$field->COLUMN_NAME}', PRECISION, SCALE)" ;
+
+                    break ;
+                case 'DOUBLE' :
+                    $descriptor .= "double('{$field->COLUMN_NAME}', {$field->NUMERIC_PRECISION}, {$field->NUMERIC_SCALE})" ;
+
+                    break ;
+                case 'ENUM' :
+                    $descriptor .= "enum('{$field->COLUMN_NAME}', [" . preg_replace('/\)$/', '', preg_replace('/enum\(/', '', $field->COLUMN_TYPE)) . "])" ;
+
+                    break ;
+                case 'FLOAT' :
+                    $descriptor .= "float('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'INT' : //TODO: If this is a foreign key, make it unsigned to match the AI field
+                    $descriptor .= "integer('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'INTEGER' :
+                    $descriptor .= "integer('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'JSON' :
+                    $descriptor .= "json('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'JSONB' :
+                    $descriptor .= "jsonb('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'LONGTEXT' :
+                    $descriptor .= "longText('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'MEDIUMINT' :
+                    $descriptor .= "mediumInteger('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'MEDIUMTEXT' :
+                    $descriptor .= "mediumText('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'SMALLINT' :
+                    $descriptor .= "smallInteger('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'VARCHAR' :
+                    $descriptor .= "string('{$field->COLUMN_NAME}', {$field->CHARACTER_MAXIMUM_LENGTH})" ;
+
+                    break ;
+                case 'TEXT' :
+                    $descriptor .= "text('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'TIME' :
+                    $descriptor .= "time('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'TINYINT' :
+                    $descriptor .= "tinyInteger('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                case 'TIMESTAMP' :
+                    $descriptor .= "timestamp('{$field->COLUMN_NAME}')" ;
+
+                    break ;
+                default:
+                    break ;
             }
 
-            if(!$hack) {
+            if (! $hack) {
                 $descriptor .= $this->generateNullable($field);
                 $descriptor .= $this->generateFieldUniqueness($field);
                 $descriptor .= $this->generateDefault($field);
@@ -239,7 +259,7 @@ class GenerateMigrationFromMySQL extends Command
 
         $descriptors .= "\n" ;
 
-        if(!empty($mysql_hacks)) {
+        if (! empty($mysql_hacks)) {
             $descriptors .= "\n{$mysql_hacks}\n" ;
         }
 
@@ -257,14 +277,13 @@ class GenerateMigrationFromMySQL extends Command
 								AND REFERENCED_COLUMN_NAME IS NOT NULL"
         );
 
-        if(empty($fields)) {
+        if (empty($fields)) {
             return '' ;
         }
 
         $foreign_keys = "\t/**  Foreign Key Relations  **/\n";
 
-        foreach($fields AS $field)
-        {
+        foreach ($fields as $field) {
             $foreign_keys .= "\n\t\t\$table->index('{$field->COLUMN_NAME}') ; \$table->foreign('{$field->COLUMN_NAME}')->references('{$field->REFERENCED_TABLE_NAME}')->on('{$field->REFERENCED_COLUMN_NAME}') ;"; //->onDelete('cascade')" ;
         }
 
@@ -273,7 +292,7 @@ class GenerateMigrationFromMySQL extends Command
 
     private function generateFieldUniqueness($field)
     {
-        if($field->COLUMN_KEY == 'UNI') {
+        if ($field->COLUMN_KEY == 'UNI') {
             return '->unique()' ;
         }
 
@@ -282,7 +301,7 @@ class GenerateMigrationFromMySQL extends Command
 
     private function generateFieldLength($length)
     {
-        if(empty($length)) {
+        if (empty($length)) {
             return '' ;
         }
 
@@ -291,7 +310,7 @@ class GenerateMigrationFromMySQL extends Command
 
     private function generateNullable($field)
     {
-        if($field->IS_NULLABLE == 'NO') {
+        if ($field->IS_NULLABLE == 'NO') {
             return '' ;
         }
 
@@ -300,7 +319,7 @@ class GenerateMigrationFromMySQL extends Command
 
     private function generateDefault($field)
     {
-        if(!empty($field->COLUMN_DEFAULT) && (!empty(stringValue($field->COLUMN_DEFAULT)))) {
+        if (! empty($field->COLUMN_DEFAULT) && (! empty(stringValue($field->COLUMN_DEFAULT)))) {
             return "->default('{$field->COLUMN_DEFAULT}')" ;
         }
 
