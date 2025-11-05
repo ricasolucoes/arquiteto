@@ -1,11 +1,20 @@
 # Arquiteto - Biblioteca de Geração de Código para Laravel
 
+**Rica Soluções Arquiteto** - Geração automática de código Laravel com base em banco de dados MySQL.
+
+[![Packagist](https://img.shields.io/packagist/v/ricasolucoes/arquiteto.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/ricasolucoes/arquiteto)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ricasolucoes/arquiteto.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/ricasolucoes/arquiteto/)
+[![Travis](https://img.shields.io/travis/ricasolucoes/arquiteto.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/ricasolucoes/arquiteto)
+[![StyleCI](https://styleci.io/repos/arquiteto/shield)](https://styleci.io/repos/arquiteto)
+[![License](https://img.shields.io/packagist/l/ricasolucoes/arquiteto.svg?label=License&style=flat-square)](https://github.com/ricasolucoes/arquiteto/blob/master/LICENSE)
+
 <p align="center">
-  <img src="https://img.shields.io/packagist/v/ricasolucoes/arquiteto.svg?label=Packagist&style=flat-square" alt="Packagist">
-  <img src="https://img.shields.io/packagist/l/ricasolucoes/arquiteto.svg?label=License&style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Laravel-8.x%20%7C%209.x%20%7C%2010.x-red.svg?style=flat-square" alt="Laravel">
   <img src="https://img.shields.io/badge/PHP-7.2%2B%20%7C%208.x-blue.svg?style=flat-square" alt="PHP">
+  <img src="https://img.shields.io/badge/MySQL-5.7%2B%20%7C%208.x-blue.svg?style=flat-square" alt="MySQL">
 </p>
+
+---
 
 ## 📚 Índice
 
