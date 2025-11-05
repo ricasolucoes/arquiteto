@@ -1,58 +1,297 @@
-# SierraTecnologia Arquiteto
+# Arquiteto - Biblioteca de Geração de Código para Laravel
 
-**SierraTecnologia Arquiteto** Various functionality, and basic controller included out-of-the-box.
+**Rica Soluções Arquiteto** - Geração automática de código Laravel com base em banco de dados MySQL.
 
-[![Packagist](https://img.shields.io/packagist/v/sierratecnologia/trainner.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/sierratecnologia/trainner)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/sierratecnologia/trainner.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/sierratecnologia/trainner/)
-[![Travis](https://img.shields.io/travis/sierratecnologia/trainner.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/sierratecnologia/trainner)
-[![StyleCI](https://styleci.io/repos/60968880/shield)](https://styleci.io/repos/60968880)
-[![License](https://img.shields.io/packagist/l/sierratecnologia/trainner.svg?label=License&style=flat-square)](https://github.com/sierratecnologia/trainner/blob/master/LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/ricasolucoes/arquiteto.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/ricasolucoes/arquiteto)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ricasolucoes/arquiteto.svg?label=Scrutinizer&style=flat-square)](https://scrutinizer-ci.com/g/ricasolucoes/arquiteto/)
+[![Travis](https://img.shields.io/travis/ricasolucoes/arquiteto.svg?label=TravisCI&style=flat-square)](https://travis-ci.org/ricasolucoes/arquiteto)
+[![StyleCI](https://styleci.io/repos/arquiteto/shield)](https://styleci.io/repos/arquiteto)
+[![License](https://img.shields.io/packagist/l/ricasolucoes/arquiteto.svg?label=License&style=flat-square)](https://github.com/ricasolucoes/arquiteto/blob/master/LICENSE)
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-8.x%20%7C%209.x%20%7C%2010.x-red.svg?style=flat-square" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-7.2%2B%20%7C%208.x-blue.svg?style=flat-square" alt="PHP">
+  <img src="https://img.shields.io/badge/MySQL-5.7%2B%20%7C%208.x-blue.svg?style=flat-square" alt="MySQL">
+</p>
 
-## Installation
+---
 
-Install via `composer require sierratecnologia/trainner`
+## 📚 Índice
 
+- [Introdução](#-introdução)
+- [Instalação](docs/instalacao.md)
+- [Arquitetura](docs/arquitetura.md)
+- [Comandos Disponíveis](docs/comandos.md)
+- [Uso Prático](docs/uso-pratico.md)
+- [Integração Rica Soluções](docs/integracao.md)
+- [Extensão e Customização](docs/extensao.md)
+- [Exemplos Reais](docs/exemplos.md)
+- [Contribuição](docs/contribuicao.md)
 
-## Changelog
+---
 
-Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
+## 🎯 Introdução
 
+### O que é a biblioteca Arquiteto?
 
-## Support
+**Arquiteto** é uma biblioteca Laravel desenvolvida pela **Rica Soluções** que acelera drasticamente o desenvolvimento de aplicações através da **geração automática de código** a partir de bases de dados MySQL existentes ou modelos Eloquent.
 
-The following support channels are available at your fingertips:
+A biblioteca implementa um conjunto robusto de comandos Artisan que analisam a estrutura do banco de dados, detectam relacionamentos, e geram automaticamente:
 
-- [Chat on Slack](https://bit.ly/sierratecnologia-slack)
-- [Help on Email](mailto:help@sierratecnologia.com.br)
-- [Follow on Twitter](https://twitter.com/sierratecnologia)
+- ✅ **Modelos Eloquent** com fillables, relationships e soft deletes
+- ✅ **Migrations** Laravel a partir de tabelas MySQL
+- ✅ **Form Requests** com validações baseadas na estrutura da tabela
+- ✅ **Filtros Eloquent** para queries complexas
+- ✅ **Controllers, Views e Models** de forma integrada
 
+### Objetivo e Filosofia do Projeto
 
-## Contributing & Protocols
+O Arquiteto foi criado com base nos seguintes princípios:
 
-Thank you for considering contributing to this project! The contribution guide can be found in [CONTRIBUTING.md](CONTRIBUTING.md).
+#### 🚀 **Produtividade Acelerada**
+Reduz significativamente o tempo gasto escrevendo código repetitivo (boilerplate), permitindo que desenvolvedores foquem na lógica de negócio.
 
-Bug reports, feature requests, and pull requests are very welcome.
+#### 📐 **Padronização de Código**
+Garante que toda a equipe siga os mesmos padrões de nomenclatura, estrutura e organização, essenciais em ambientes corporativos.
 
-- [Versioning](CONTRIBUTING.md#versioning)
-- [Pull Requests](CONTRIBUTING.md#pull-requests)
-- [Coding Standards](CONTRIBUTING.md#coding-standards)
-- [Feature Requests](CONTRIBUTING.md#feature-requests)
-- [Git Flow](CONTRIBUTING.md#git-flow)
+#### 🔄 **Integração com Legado**
+Facilita a modernização de sistemas legados, gerando automaticamente modelos Laravel a partir de estruturas de banco de dados existentes.
 
+#### 🧩 **Arquitetura Limpa**
+Promove boas práticas de desenvolvimento com separação clara de responsabilidades e código organizado.
 
-## Security Vulnerabilities
+### Benefícios de Uso
 
-If you discover a security vulnerability within this project, please send an e-mail to [help@sierratecnologia.com.br](help@sierratecnologia.com.br). All security vulnerabilities will be promptly addressed.
+| Benefício | Descrição |
+|-----------|-----------|
+| **⚡ Velocidade** | Gera em segundos o que levaria horas para escrever manualmente |
+| **🎯 Precisão** | Detecta automaticamente tipos de dados, constraints e relacionamentos |
+| **🔒 Segurança** | Gera validações baseadas na estrutura real do banco de dados |
+| **📦 Escalabilidade** | Facilita a expansão de projetos com novos módulos padronizados |
+| **👥 Colaboração** | Equipes trabalham com código consistente e previsível |
+| **🔧 Manutenibilidade** | Código gerado segue convenções Laravel, facilitando manutenção |
 
+### Contexto no Ecossistema Rica Soluções
 
-## About SierraTecnologia
+O **Arquiteto** é peça fundamental na **stack de desenvolvimento** da Rica Soluções, integrando-se perfeitamente com outras bibliotecas internas:
 
-SierraTecnologia is a software solutions startup, specialized in integrated enterprise solutions for SMEs established in Rio de Janeiro, Brazil since June 2008. We believe that our drive The Value, The Reach, and The Impact is what differentiates us and unleash the endless possibilities of our philosophy through the power of software. We like to call it Innovation At The Speed Of Life. That’s how we do our share of advancing humanity.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   Ecossistema Rica Soluções                  │
+├─────────────────────────────────────────────────────────────┤
+│  📦 Arquiteto (Geração de Código)                            │
+│  📦 Muleta (Ferramentas e Traits Reutilizáveis)             │
+│  📦 Support (Parsers e Utilitários)                          │
+│  📦 Pedreiro (Gestão de Exceções)                            │
+├─────────────────────────────────────────────────────────────┤
+│  🌐 APIs REST / GraphQL                                       │
+│  🔐 Autenticação e Autorização                               │
+│  📊 Dashboards e Relatórios                                  │
+│  🛠️  Microserviços Laravel                                    │
+└─────────────────────────────────────────────────────────────┘
+```
 
+### Casos de Uso Ideais
 
-## License
+✅ **Migração de sistemas legados** - Gere modelos Laravel de bases existentes
+✅ **Prototipagem rápida** - Crie MVPs e provas de conceito rapidamente
+✅ **APIs REST/GraphQL** - Scaffolding de recursos com models e requests
+✅ **Microserviços** - Padronize a estrutura de múltiplos serviços
+✅ **Refatoração** - Modernize projetos antigos com estrutura Laravel atual
 
-This software is released under [The MIT License (MIT)](LICENSE).
+---
 
-(c) 2008-2020 SierraTecnologia, Some rights reserved.
+## 🚀 Início Rápido
+
+### Instalação
+
+```bash
+composer require ricasolucoes/arquiteto
+```
+
+### Uso Básico
+
+```bash
+# Gerar modelo a partir da tabela 'users'
+php artisan arquiteto:migrationFromMysql users
+
+# Gerar migration a partir da tabela
+php artisan arquiteto:migrationFromMysql database.users
+
+# Gerar form request com validações
+php artisan arquiteto:request users
+
+# Gerar filtro Eloquent
+php artisan arquiteto:filter UserFilter
+```
+
+---
+
+## 📖 Documentação Completa
+
+### 📚 Guias Principais
+
+- **[Instalação](docs/instalacao.md)** - Requisitos, instalação e configuração inicial
+- **[Arquitetura](docs/arquitetura.md)** - Estrutura interna, namespaces e padrões
+- **[Comandos](docs/comandos.md)** - Referência completa de todos os comandos
+- **[Uso Prático](docs/uso-pratico.md)** - Como usar no dia a dia com exemplos
+
+### 🔧 Guias Avançados
+
+- **[Integração](docs/integracao.md)** - Integração com ecossistema Rica Soluções
+- **[Extensão](docs/extensao.md)** - Como customizar e estender funcionalidades
+- **[Exemplos](docs/exemplos.md)** - Exemplos reais de projetos da Rica Soluções
+
+### 👥 Colaboração
+
+- **[Contribuição](docs/contribuicao.md)** - Como contribuir com o projeto
+
+---
+
+## 🏗️ Arquitetura Resumida
+
+```
+Arquiteto/
+├── Console/Commands/          # Comandos de geração de código
+│   ├── Generate.php           # Gera controller + model + view
+│   ├── GenerateModelFromMySQL.php      # Model a partir do MySQL
+│   ├── GenerateMigrationFromMySQL.php  # Migration do MySQL
+│   ├── GenerateRequestFromMySQL.php    # Form Request do MySQL
+│   └── MakeEloquentFilter.php          # Cria filtros Eloquent
+├── Contracts/
+│   ├── AbstractGeneratorCommand.php    # Base para geradores
+│   └── Traits/
+│       └── ManipuleFile.php           # Manipulação de arquivos
+├── Facades/
+│   └── Arquiteto.php          # Facade Laravel
+└── Services/
+    └── ArquitetoService.php   # Serviço principal
+```
+
+---
+
+## 🎓 Exemplo Completo
+
+### Cenário: Criar estrutura completa para entidade "Product"
+
+```bash
+# 1. Gerar modelo Eloquent a partir da tabela products
+php artisan arquiteto:migrationFromMysql products
+
+# 2. Gerar form request com validações
+php artisan arquiteto:request products
+
+# 3. Gerar filtro para queries avançadas
+php artisan arquiteto:filter ProductFilter
+
+# 4. Resultado: estrutura completa gerada
+app/
+├── Models/
+│   └── Product.php            # Com fillables e relationships
+├── Http/
+│   ├── Requests/
+│   │   └── ProductRequest.php # Validações automáticas
+│   └── Controllers/
+└── ModelFilters/
+    └── ProductFilter.php      # Filtros reutilizáveis
+```
+
+O modelo gerado automaticamente inclui:
+
+```php
+// app/Models/Product.php
+namespace Support;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Product extends Model {
+    use SoftDeletes;
+
+    protected $table = 'products';
+    public $timestamps = false;
+
+    public $fillable = [
+        'name',        // (varchar(255))
+        'description', // (text)
+        'price',       // (decimal(10,2))
+        'category_id', // (int)
+        'created_at',  // (timestamp)
+    ];
+
+    /**  One-to-Many Relations  **/
+    public function Category() {
+        return $this->hasOne('Arquiteto\Category', 'id', 'category_id');
+    }
+
+    /**  Many-to-One Relations  **/
+    public function Orders() {
+        return $this->hasMany('Arquiteto\Order', 'product_id', 'id');
+    }
+}
+```
+
+---
+
+## 🤝 Suporte e Comunidade
+
+- 💬 [Chat no Slack](https://bit.ly/ricasolucoes-slack)
+- 📧 [Suporte por Email](mailto:help@ricasolucoes.com.br)
+- 🐛 [Reportar Issues](https://github.com/ricasolucoes/arquiteto/issues)
+- 📖 [Documentação Completa](https://ricasolucoes.com/packages/arquiteto/)
+
+---
+
+## 🔒 Vulnerabilidades de Segurança
+
+Se você descobrir uma vulnerabilidade de segurança dentro deste projeto, por favor envie um e-mail para [help@ricasolucoes.com.br](mailto:help@ricasolucoes.com.br). Todas as vulnerabilidades de segurança serão prontamente tratadas.
+
+---
+
+## 🏢 Sobre a SierraTecnologia
+
+**SierraTecnologia** é uma startup de soluções de software, especializada em soluções empresariais integradas para PMEs, estabelecida no Rio de Janeiro, Brasil, desde junho de 2008.
+
+Acreditamos que nosso compromisso com **O Valor, O Alcance e O Impacto** é o que nos diferencia e libera as infinitas possibilidades de nossa filosofia através do poder do software. Gostamos de chamar isso de **Inovação na Velocidade da Vida**. É assim que fazemos nossa parte para avançar a humanidade.
+
+### Nossa Missão
+
+Desenvolver soluções tecnológicas inovadoras que transformam desafios empresariais em oportunidades de crescimento, entregando valor real através de software de qualidade.
+
+### Rica Soluções
+
+**Rica Soluções** é a marca de produtos e serviços da SierraTecnologia, focada em bibliotecas Laravel, ferramentas de desenvolvimento e soluções corporativas de código aberto.
+
+---
+
+## 📝 Licença
+
+Este software é disponibilizado sob a licença [MIT License](LICENSE).
+
+**© 2008-2025 SierraTecnologia / Rica Soluções** - Alguns direitos reservados.
+
+---
+
+## 🌟 Créditos
+
+Desenvolvido com ❤️ pela equipe **SierraTecnologia** através da **Rica Soluções**.
+
+**Empresa:** [SierraTecnologia](https://sierratecnologia.com.br)
+**Produto:** [Rica Soluções](https://ricasolucoes.com.br)
+**Email:** help@ricasolucoes.com.br
+
+---
+
+## 🔗 Links Úteis
+
+- 🏠 [Homepage](https://ricasolucoes.com/packages/arquiteto/)
+- 📦 [Packagist](https://packagist.org/packages/ricasolucoes/arquiteto)
+- 🐙 [GitHub](https://github.com/ricasolucoes/arquiteto)
+- 📚 [Documentação Oficial](https://github.com/ricasolucoes/arquiteto/tree/master/docs)
+
+---
+
+<p align="center">
+  <strong>Feito com 🚀 pela Rica Soluções</strong><br>
+  Inovação na velocidade da vida.
+</p>
