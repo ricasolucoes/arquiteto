@@ -242,19 +242,42 @@ class Product extends Model {
 
 ---
 
+## 🔒 Vulnerabilidades de Segurança
+
+Se você descobrir uma vulnerabilidade de segurança dentro deste projeto, por favor envie um e-mail para [help@ricasolucoes.com.br](mailto:help@ricasolucoes.com.br). Todas as vulnerabilidades de segurança serão prontamente tratadas.
+
+---
+
+## 🏢 Sobre a SierraTecnologia
+
+**SierraTecnologia** é uma startup de soluções de software, especializada em soluções empresariais integradas para PMEs, estabelecida no Rio de Janeiro, Brasil, desde junho de 2008.
+
+Acreditamos que nosso compromisso com **O Valor, O Alcance e O Impacto** é o que nos diferencia e libera as infinitas possibilidades de nossa filosofia através do poder do software. Gostamos de chamar isso de **Inovação na Velocidade da Vida**. É assim que fazemos nossa parte para avançar a humanidade.
+
+### Nossa Missão
+
+Desenvolver soluções tecnológicas inovadoras que transformam desafios empresariais em oportunidades de crescimento, entregando valor real através de software de qualidade.
+
+### Rica Soluções
+
+**Rica Soluções** é a marca de produtos e serviços da SierraTecnologia, focada em bibliotecas Laravel, ferramentas de desenvolvimento e soluções corporativas de código aberto.
+
+---
+
 ## 📝 Licença
 
 Este software é disponibilizado sob a licença [MIT License](LICENSE).
 
-**© 2008-2025 Rica Soluções** - Alguns direitos reservados.
+**© 2008-2025 SierraTecnologia / Rica Soluções** - Alguns direitos reservados.
 
 ---
 
 ## 🌟 Créditos
 
-Desenvolvido com ❤️ pela equipe **Rica Soluções**.
+Desenvolvido com ❤️ pela equipe **SierraTecnologia** através da **Rica Soluções**.
 
-**Autor Principal:** [Rica Soluções](https://ricasolucoes.com.br)
+**Empresa:** [SierraTecnologia](https://sierratecnologia.com.br)
+**Produto:** [Rica Soluções](https://ricasolucoes.com.br)
 **Email:** help@ricasolucoes.com.br
 
 ---
